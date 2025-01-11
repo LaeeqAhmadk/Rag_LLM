@@ -1,9 +1,6 @@
 import os
 import sys
-# Directly set the project root directory
-project_root = "D:/Projects/Rag_LLM/Rag_LLM"
-# Ensure the project root is at the top of sys.path
-sys.path.insert(0, project_root)
+sys.path.append("D:/Projects/Rag_LLM/Rag_LLM")
 from langchain.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from custom_logger import logger
@@ -20,10 +17,9 @@ def load_documents(file_path: str):
         list: List of documents.
     """
     try:
-        logger.info("Loading documents")
         loader = PyPDFLoader(file_path)
         documents = loader.load()
-        logger.info("Documents loaded successfully from %w", file_path)
+        logger.info("Documents loaded successfully from %s", file_path)
         return documents
     except Exception as e:
         raise CustomException(e, sys)
@@ -49,9 +45,3 @@ def split_documents(documents: list, chunk_size: int = 2000, chunk_overlap: int 
     except Exception as e:
         raise CustomException(e, sys)
     
-
-
-if __name__ == "__main__":
-    file_path = os.path.join("data", "sample.pdf")
-    documents = load_documents(file_path)
-    texts = split_documents(documents)
