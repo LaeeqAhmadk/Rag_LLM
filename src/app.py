@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel  # Ensures input validation
 from src.main import retriever  # Import retriever from your main logic module
+from src.main import retriever  # Import retriever from your main logic module
 
 app = FastAPI()  # Initialize FastAPI app
 
@@ -40,4 +41,4 @@ async def ask_question(query: QueryRequest):
 if __name__ == "__main__":
     import uvicorn
     # Run the FastAPI app using Uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run("src.app:app", host="0.0.0.0", port=8000, reload=True)
