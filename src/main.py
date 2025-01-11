@@ -54,7 +54,7 @@ def retriever(question: str):
 if __name__ == "__main__":
     try:
         # Example question
-        sample_question = "Summarize the whole data"
+        sample_question = "Who is Mike?"
         response = retriever(sample_question)
         print(f"Question: {sample_question}\nAnswer: {response}")
     except Exception as e:
