@@ -1,3 +1,19 @@
+import os
+import sys
+from dotenv import load_dotenv
+from langchain.prompts import PromptTemplate
+from langchain_community.vectorstores import Qdrant
+from qdrant_client import QdrantClient
+from custom_logger import logger
+from exception import CustomException
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from transformers import AutoTokenizer, AutoModel
+from langchain_groq import ChatGroq
+from langchain_core.runnables import RunnablePassthrough
+from langchain_core.output_parsers import StrOutputParser
+
+load_dotenv()
+
 def format_docs(docs):
     """
     Format the documents retrieved by Qdrant to a string suitable for passing to the LLM.
@@ -57,7 +73,7 @@ def retrieve_answer_from_docs(question: str):
         retriever = qdrant.as_retriever(search_kwargs={"k": 20})
 
         # Set up the ChatGroq LLM for answering
-        llm = ChatGroq(model="llma-3.1-70b-versatile", api_key=groq_api_key, temperature=0, max_tokens=None, timeout=None, max_retries=2)
+        llm = ChatGroq(model="llama-3.1-8b-instant", api_key=groq_api_key, temperature=0, max_tokens=None, timeout=None, max_retries=2)
 
         # Chain the retriever, formatter, and LLM together
         rag_chain = (
